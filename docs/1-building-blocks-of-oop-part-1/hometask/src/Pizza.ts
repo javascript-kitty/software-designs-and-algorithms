@@ -1,12 +1,26 @@
 import { Consumable } from "./Consumable";
 
 export class Pizza extends Consumable {
-    numberOfSlices: number;
-    slicesEaten: number;
+  numberOfSlices: number;
+  slicesEaten: number = 0;
 
-    constructor(numberOfSlices: number, spoiled: boolean) {
-        super('pizza')
-        this.numberOfSlices = numberOfSlices;
-        this.slicesEaten = 0
+  constructor(numberOfSlices: number, spoiled: boolean) {
+    super("pizza", 10, 100, spoiled);
+    this.numberOfSlices = numberOfSlices;
+  }
+  eat(): string {
+    if (this.slicesEaten < this.numberOfSlices) {
+      this.eatSlice();
+
+      if (this.slicesEaten >= this.numberOfSlices) {
+        this.setConsumed(true);
+      }
+    } else {
+      return this.use();
     }
+  }
+
+  eatSlice() {
+    this.slicesEaten = this.slicesEaten + 1;
+  }
 }
