@@ -14,7 +14,6 @@ export class Inventory {
     }
     return this.items.sort((a, b) => a.value - b.value);
   }
-
   toString(): string {
     return this.items.join(", ");
   }

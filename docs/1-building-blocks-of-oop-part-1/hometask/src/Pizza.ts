@@ -10,7 +10,7 @@ export class Pizza extends Consumable {
   }
   eat(): string {
     if (this.slicesEaten < this.numberOfSlices) {
-      this.eatSlice();
+      this.slicesEaten = this.slicesEaten - 1;
 
       if (this.slicesEaten >= this.numberOfSlices) {
         this.setConsumed(true);
@@ -18,9 +18,5 @@ export class Pizza extends Consumable {
     } else {
       return this.use();
     }
-  }
-
-  eatSlice() {
-    this.slicesEaten = this.slicesEaten + 1;
   }
 }

@@ -2,24 +2,20 @@ import { Item } from "./Item";
 
 export abstract class Weapon extends Item {
   protected MODIFIER_CHANGE_RATE: number = 0.05;
-  private currentDurability: number;
 
   baseDamage: number;
   damageModifier: number;
   baseDurability: number;
   durabilityModifier: number;
-  name: string;
-  value: number;
-  weight: number;
 
-  constructor(name, value, weight, baseDamage, baseDurability) {
+  constructor(name, baseDamage, baseDurability, value, weight) {
     super(name, value, weight);
     this.baseDamage = baseDamage;
     this.baseDurability = baseDurability;
     this.damageModifier = this.MODIFIER_CHANGE_RATE;
     this.durabilityModifier = this.MODIFIER_CHANGE_RATE;
-    this.currentDurability = this.baseDurability + this.durabilityModifier;
   }
+
 
   getDamage(): number {
     return this.baseDamage + this.damageModifier; //effective damage that this Weapon can do on a single use.
@@ -36,22 +32,22 @@ export abstract class Weapon extends Item {
   }
   use(): string {
     let message;
-    if (this.currentDurability <= 0) {
+    if (this.getDurability() <= 0) {
       message = `You can't use the ${this.name}, it is broken.`;
     } else {
       message = `You use the ${this.name}, dealing ${this.getDamage().toFixed(
         2
       )} points of damage.`;
-      const newValue = this.currentDurability - this.MODIFIER_CHANGE_RATE;
-      this.setCurrentDurability(newValue);
+      const newValue = this.baseDurability - this.MODIFIER_CHANGE_RATE;
+      this.setDurability(newValue);
       message =
         newValue > 0 ? message : `${message} \n The ${this.name} breaks.`;
     }
     return message;
   }
 
-  setCurrentDurability(value: number): void {
-    this.currentDurability = value;
+  setDurability(value: number): void {
+    this.baseDurability = value;
   }
 
   setDamageModifier(value: number): void {
