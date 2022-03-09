@@ -25,11 +25,9 @@ function App() {
     );
   }, []);
 
-  const usersToDisplay = useMemo(
-    () => applyFilters(data, search, filter, sort),
-    //check data
-    [sort, filter, search, data]
-  );
+  const usersToDisplay = useMemo(() => {
+    return applyFilters(data, search, filter, sort);
+  }, [sort, filter, search, data]);
 
   return (
     <StyledEngineProvider injectFirst>

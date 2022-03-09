@@ -12,7 +12,7 @@ interface SearchProps {
 
 export function Search(props: SearchProps) {
   const onChange = (value) => {
-    props.updateSelected(value.toLowerCase());
+    props.updateSelected(value.trim().toLowerCase());
   };
 
   return (

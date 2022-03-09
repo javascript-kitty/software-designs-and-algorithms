@@ -21,4 +21,4 @@ export interface Account {
   payments: Payment[];
 }
 
-export type TSort = "desc" | "asc";
+export type TSort = "desc" | "asc" | undefined;

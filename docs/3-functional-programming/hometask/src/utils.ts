@@ -16,19 +16,29 @@ export const dataConverter = (
   }));
 };
 
-export const searchData = (input: string, data: Row[]) =>
-  data.filter(
+export const searchData = (input: string) => (data: Row[]) => {
+  if (input.length === 0) {
+    return data;
+  }
+
+  return data.filter(
     (row) =>
       row.name.toLowerCase().includes(input) ||
       row.username.toLowerCase().includes(input) ||
       row.country.toLowerCase().includes(input)
   );
+};
 
-export const sortData = (sort: TSort, data: Row[]) =>
-  data.sort((a, b) => (sort === "asc" ? a.posts - b.posts : b.posts - a.posts));
+export const sortData = (sort: TSort) => (data: Row[]) => {
+  if (!sort) {
+    return data;
+  }
+  return data.sort((a, b) =>
+    sort === "asc" ? a.posts - b.posts : b.posts - a.posts
+  );
+};
 
-export const filterData = (filter: string[], data: Row[]) => {
-  debugger;
+export const filterData = (filter: string[]) => (data: Row[]) => {
   return filter.length === 2
     ? data.filter((el) => el.posts === 0 || el.posts > 100)
     : filter.includes("Without posts")
@@ -38,21 +48,18 @@ export const filterData = (filter: string[], data: Row[]) => {
     : data;
 };
 
+const compose = (...funcs) => {
+  return (data) => {
+    return funcs.reverse().reduce((acc, func) => func(acc), data);
+  };
+};
+
 export const applyFilters = (data, search, filter, sort) => {
-  debugger;
   if (data) {
-    let filteredData = data;
-
-    if (search.length > 0) {
-      filteredData = searchData(search, data);
-    }
-    if (filter.length > 0) {
-      filteredData = filterData(filter, data);
-    }
-    if (sort) {
-      filteredData = sortData(sort, data);
-    }
-
-    return filteredData;
+    return compose(
+      searchData(search),
+      filterData(filter),
+      sortData(sort)
+    )(data);
   }
 };
