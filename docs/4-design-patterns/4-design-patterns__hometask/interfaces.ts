@@ -1,8 +1,11 @@
 export interface IShipment {
-  // shimpent: IShipment;
-  shipper: IShipper;
-  ship(): string;
-  // getShipmentID(): string;
+  getShimpentID(): number;
+  ship(state: State): string;
+}
+export enum Marks {
+  FRAGILE = "Fragile",
+  DO_NOT_LEAVE = "Do Not Leave",
+  RETURN_RECEIPT_REQUESTED = "Return Receipt Requested",
 }
 
 export interface IShipper {
@@ -16,6 +19,7 @@ export interface State {
   toZipCode: string;
   fromZipCode: string;
   weight: number;
+  marks?: Marks[];
 }
 
 export enum ShipmentTypes {

@@ -1,16 +1,16 @@
 import { Shipment } from "../Shipment";
-import { IShipment } from "../interfaces";
+import { IShipment, ShipmentTypes } from "../interfaces";
 
 export class Oversized extends Shipment {
   private static shipment: IShipment;
 
-  constructor(state) {
-    super(state);
+  getShipmentType(): ShipmentTypes {
+    return ShipmentTypes.Oversized;
   }
 
-  getInstance(): IShipment {
+  static getInstance(): IShipment {
     if (!Oversized.shipment) {
-      Oversized.shipment = new Oversized(this.state);
+      Oversized.shipment = new Oversized();
     }
     return Oversized.shipment;
   }

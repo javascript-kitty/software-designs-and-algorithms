@@ -1,16 +1,16 @@
 import { Shipment } from "../Shipment";
-import { IShipment } from "../interfaces";
+import { IShipment, ShipmentTypes } from "../interfaces";
 
 export class Package extends Shipment {
   private static shipment: IShipment;
 
-  constructor(state) {
-    super(state);
+  getShipmentType(): ShipmentTypes {
+    return ShipmentTypes.Package;
   }
 
-  getInstance(): IShipment {
+  static getInstance(): IShipment {
     if (!Package.shipment) {
-      Package.shipment = new Package(this.state);
+      Package.shipment = new Package();
     }
     return Package.shipment;
   }
